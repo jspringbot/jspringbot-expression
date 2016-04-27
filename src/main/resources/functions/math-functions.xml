@@ -3,6 +3,13 @@
 <functions>
   <function>
     <prefix>math</prefix>
+    <name>randomBetweenInt</name>
+    <description>Random between integer.</description>
+    <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>
+    <function-signature>int randomBetweenInt(int, int)</function-signature>
+  </function>
+  <function>
+    <prefix>math</prefix>
     <name>absLong</name>
     <description>Returns the absolute value of a long value. If the argument is not negative, the argument is returned. If the argument is negative, the negation of the argument is returned.
     </description>

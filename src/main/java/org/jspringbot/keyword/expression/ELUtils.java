@@ -105,6 +105,10 @@ public class ELUtils {
         return name + System.currentTimeMillis();
     }
 
+    public static int randomBetweenInt(int min, int max) {
+        return min + (int)(Math.random() * ((max - min) + 1));
+    }
+
     public static String replaceVars(String string) throws Exception {
         StringBuilder buf = new StringBuilder(string);
         Matcher matcher = PATTERN.matcher(buf);
