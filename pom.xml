@@ -29,7 +29,7 @@
   </parent>
 
   <artifactId>jspringbot-expression</artifactId>
-  <version>1.4-SNAPSHOT</version>
+  <version>1.4</version>
 
   <packaging>jar</packaging>
   <name>jspringbot-expression</name>
@@ -112,6 +112,7 @@
     <dependency>
       <groupId>org.jspringbot</groupId>
       <artifactId>jspringbot-pretty-logger</artifactId>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>de.odysseus.juel</groupId>
