@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 public final class StaticMethodUtils {
 
-    private static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("([a-z\\.\\[\\]]+)\\s+([a-z0-9$_]+)\\s*\\(\\s*(([a-z0-9$_\\[\\]\\._$]+(\\s*,\\s*)?)+)\\)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("([a-z\\.\\[\\]]+)\\s+([a-z0-9$_]+)\\s*\\(\\s*(([a-z0-9$_\\[\\]\\._$]+(\\s*,\\s*)?)+)?\\)", Pattern.CASE_INSENSITIVE);
 
     public static Method getMethod(Class clazz, String methodSignature) {
         Matcher matcher = METHOD_SIGNATURE_PATTERN.matcher(methodSignature);
@@ -40,10 +40,12 @@ public final class StaticMethodUtils {
             String parameterTypes = matcher.group(3);
 
             List<Class> types = new ArrayList<Class>();
-            for(String parameterType : StringUtils.split(parameterTypes, ',')) {
-                ClassEditor editor = new ClassEditor();
-                editor.setAsText(parameterType);
-                types.add((Class) editor.getValue());
+            if(parameterTypes != null) {
+                for (String parameterType : StringUtils.split(parameterTypes, ',')) {
+                    ClassEditor editor = new ClassEditor();
+                    editor.setAsText(parameterType);
+                    types.add((Class) editor.getValue());
+                }
             }
 
             return MethodUtils.getAccessibleMethod(clazz, methodName, types.toArray(new Class[types.size()]));
