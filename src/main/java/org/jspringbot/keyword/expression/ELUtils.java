@@ -213,6 +213,28 @@ public class ELUtils {
         return list.contains(strs[0]);
     }
 
+    public static Integer toInteger(Object integer) {
+        if(Number.class.isInstance(integer)) {
+            return ((Number) integer).intValue();
+        }
+
+        return Integer.getInteger(String.valueOf(integer));
+    }
+
+    public static String regexCapture(String str, String regex, int... groups) {
+        Matcher matcher = Pattern.compile(regex).matcher(str);
+
+        if(matcher.find()) {
+            if(groups.length > 0) {
+                return matcher.group(groups[0]);
+            } else {
+                return matcher.group(0);
+            }
+        }
+
+        return "";
+    }
+
     public static boolean inFile(String... args) throws IOException {
         String location = IN_FILE_DEFAULT_LOCATION;
         String key;

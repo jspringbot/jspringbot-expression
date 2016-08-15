@@ -26,6 +26,18 @@
     <function-signature>java.lang.Long getMillis(java.lang.String)</function-signature>
   </function>
   <function>
+    <name>regexCapture</name>
+    <description>Captures a substring given a string.</description>
+    <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>
+    <function-signature>java.lang.String regexCapture(java.lang.String,java.lang.String,int[])</function-signature>
+  </function>
+  <function>
+    <name>toInteger</name>
+    <description>Converts the value to integer.</description>
+    <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>
+    <function-signature>java.lang.Integer toInteger(java.lang.Object)</function-signature>
+  </function>
+  <function>
     <name>concatMillis</name>
     <description>Concatenates a string to the current time in milliseconds.</description>
     <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>

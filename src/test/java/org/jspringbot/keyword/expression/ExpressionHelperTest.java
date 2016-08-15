@@ -163,6 +163,13 @@ public class ExpressionHelperTest {
     }
 
     @Test
+    public void testRegexCapture() throws Exception {
+        //evaluateEquals("$[i:regexCapture('display: inline-block; transform: rotate(990deg);', 'rotate\\\\(([0-9]+)deg\\\\)', 1)]", 990);
+        evaluateEquals("$[i:regexCapture('display: inline-block; transform: rotate(990deg);', 'rotate.([0-9]+)deg.', 1)]", 990);
+        evaluateEquals("$[i:math:absInteger(990-(360*toInteger(990/360)+360))]", 90);
+    }
+
+    @Test
     public void testGreaterThan() throws Exception {
         evaluateAsTrue("$[2 > 1]");
         evaluateAsFalse("$[1 > 2]");
