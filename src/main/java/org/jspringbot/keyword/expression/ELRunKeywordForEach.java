@@ -30,7 +30,7 @@ import java.util.List;
 @Component
 @KeywordInfo(
         name = "EL Run Keyword For Each",
-        parameters = {"keyword", "itemName", "itemList"},
+        parameters = {"keyword", "itemName", "itemList", "index"},
         description = "classpath:desc/ELRunKeywordForEach.txt"
 )
 public class ELRunKeywordForEach extends AbstractExpressionKeyword {
@@ -59,6 +59,7 @@ public class ELRunKeywordForEach extends AbstractExpressionKeyword {
                 continue;
             }
 
+            defaultVariableProvider.add("index", i);
             defaultVariableProvider.add(String.valueOf(params[1]), item);
             ELRunKeyword.runKeyword(String.valueOf(params[0]));
         }
