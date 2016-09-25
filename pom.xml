@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.jspringbot</groupId>
     <artifactId>jspringbot-libraries</artifactId>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
   </parent>
 
   <artifactId>jspringbot-expression</artifactId>
@@ -96,76 +96,59 @@
   <properties>
     <libdoc.name>JSpringBot Expression Library</libdoc.name>
     <libdoc.output>JSpringBotExpressionLibrary.html</libdoc.output>
-    <juel.impl.version>2.2.4</juel.impl.version>
-    <xtream.version>1.4.3</xtream.version>
-    <jsoup.version>1.7.2</jsoup.version>
-    <java.faker.version>0.2</java.faker.version>
-    <lorem.ipsum.version>1.0</lorem.ipsum.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
-      <version>1.8.3</version>
     </dependency>
     <dependency>
       <groupId>org.jspringbot</groupId>
       <artifactId>jspringbot-pretty-logger</artifactId>
-      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>de.odysseus.juel</groupId>
       <artifactId>juel-impl</artifactId>
-      <version>${juel.impl.version}</version>
     </dependency>
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>${xtream.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>${spring.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit-addons</groupId>
       <artifactId>junit-addons</artifactId>
-      <version>${junit.addons.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.opencsv</groupId>
       <artifactId>opencsv</artifactId>
-      <version>2.0</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-mapper-asl</artifactId>
-      <version>1.9.1</version>
     </dependency>
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-      <version>${jsoup.version}</version>
     </dependency>
     <dependency>
       <groupId>com.github.javafaker</groupId>
       <artifactId>javafaker</artifactId>
-      <version>${java.faker.version}</version>
     </dependency>
     <dependency>
       <groupId>de.sven-jacobs</groupId>
       <artifactId>loremipsum</artifactId>
-      <version>${lorem.ipsum.version}</version>
     </dependency>
   </dependencies>
 </project>
