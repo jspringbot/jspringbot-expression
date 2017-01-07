@@ -122,6 +122,14 @@ public class ExpressionHelperTest {
     }
 
     @Test
+    public void testStringFunction() throws Exception {
+
+        evaluateEquals("$[splitByWholeSeparator('20.00/50,000.00','/')[0]]", "20.00");
+        evaluateEquals("$[splitByWholeSeparator('20.00/50,000.00','/')[1]]", "50,000.00");
+
+    }
+
+    @Test
     public void testMd5() throws Exception {
         evaluateEquals("$[md5('12345678')]", "25d55ad283aa400af464c76d713c07ad");
     }
