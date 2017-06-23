@@ -12,8 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -191,6 +190,25 @@ public class ExpressionHelperTest {
     	links.add("https://foo.bar/file.js");
     	
     	evaluateEquals("$[parser:getJsFileLinksInHTML('<html><script type=\"text/javascript\" src=\"https://foo.bar/file.js\"></script></html>')]", links);
+    }
+
+    @Test
+    public void testShuffle() throws Exception {
+        List<String> list = Arrays.asList("1", "2", "3");
+
+        addVariable("list", list);
+        evaluate("$[col:shuffle(list)]");
+
+        ListIterator<String> itr = (ListIterator<String>) evaluate("$[list.listIterator()]");
+
+        addVariable("itr", itr);
+
+        System.out.println(list);
+
+        System.out.println("Next: " + evaluate("$[itr.next()]"));
+        System.out.println("Next: " + evaluate("$[itr.next()]"));
+        System.out.println("Next: " + evaluate("$[itr.next()]"));
+
     }
     
     @Test

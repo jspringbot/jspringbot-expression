@@ -10,6 +10,14 @@
   </function>
   <function>
     <prefix>col</prefix>
+    <name>shuffle</name>
+    <description>![CDATA[Randomly permutes the specified list using a default source of randomness.
+      All permutations occur with approximately equal likelihood.]]</description>
+    <function-class>java.util.Collections</function-class>
+    <function-signature>void shuffle(java.util.List)</function-signature>
+  </function>
+  <function>
+    <prefix>col</prefix>
     <name>isEmpty</name>
     <description><![CDATA[Null-safe check if the specified collection is empty.
       <p>Null returns true.]]></description>
