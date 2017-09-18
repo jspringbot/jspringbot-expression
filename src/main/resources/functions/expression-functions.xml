@@ -14,6 +14,12 @@
     <function-signature>java.lang.Object robotVar(java.lang.String)</function-signature>
   </function>
   <function>
+    <name>base64Image</name>
+    <description>converts image to base64</description>
+    <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>
+    <function-signature>java.lang.String base64Image(java.lang.String,java.lang.String)</function-signature>
+  </function>
+  <function>
     <name>convertUnicode</name>
     <description>Converts string to unicode character.</description>
     <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>

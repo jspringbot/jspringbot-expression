@@ -29,11 +29,11 @@ import org.jspringbot.syntax.HighlightRobotLogger;
 import org.python.util.PythonInterpreter;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceEditor;
+import sun.misc.BASE64Encoder;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -68,14 +68,37 @@ public class ELUtils {
     public static String md5(String str) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
         byte[] data = str.getBytes();
-        digest.update(data,0,data.length);
-        BigInteger i = new BigInteger(1,digest.digest());
+        digest.update(data, 0, data.length);
+        BigInteger i = new BigInteger(1, digest.digest());
         String output = i.toString(16);
-        while (output.length() < 32){
-            output = "0"+output;
+        while (output.length() < 32) {
+            output = "0" + output;
         }
         return output;
+    }
 
+    public static String base64Image(String resourceAsText, String type) throws IOException {
+        ResourceEditor editor = new ResourceEditor();
+        editor.setAsText(resourceAsText);
+
+        Resource resource = (Resource) editor.getValue();
+        BufferedImage img = ImageIO.read(resource.getFile());
+
+        return encodeToString(img, type);
+    }
+
+    public static String encodeToString(BufferedImage image, String type) throws IOException {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        ImageIO.write(image, type, bos);
+        byte[] imageBytes = bos.toByteArray();
+
+        BASE64Encoder encoder = new BASE64Encoder();
+        imageString = encoder.encode(imageBytes);
+
+        bos.close();
+        return imageString;
     }
 
     private static ExpressionHelper getHelper() {
@@ -90,7 +113,7 @@ public class ELUtils {
     public static List<Long> getExcludeIndices() {
         Map<String, Object> variables = getVariables().getVariables();
 
-        if(variables.containsKey(EXCLUDE_INDICES)) {
+        if (variables.containsKey(EXCLUDE_INDICES)) {
             return (List<Long>) variables.get(EXCLUDE_INDICES);
         }
 
@@ -106,7 +129,7 @@ public class ELUtils {
     }
 
     public static int randomBetweenInt(int min, int max) {
-        return min + (int)(Math.random() * ((max - min) + 1));
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 
     public static String replaceVars(String string) throws Exception {
@@ -114,20 +137,20 @@ public class ELUtils {
         Matcher matcher = PATTERN.matcher(buf);
 
         int startIndex = 0;
-        while(startIndex < buf.length() && matcher.find(startIndex)) {
+        while (startIndex < buf.length() && matcher.find(startIndex)) {
             String name = matcher.group(1);
 
             Object value = getVariables().getVariables().get(name);
             LOG.keywordAppender().appendProperty("Replacement EL Value ['" + name + "']", value);
-            if(value == null) {
+            if (value == null) {
                 value = robotVar(name);
                 LOG.keywordAppender().appendProperty("Replacement Robot Value ['" + name + "']", value);
             }
-            if(value == null) {
+            if (value == null) {
                 value = System.getProperty(name);
                 LOG.keywordAppender().appendProperty("Replacement System Property Value ['" + name + "']", value);
             }
-            if(value == null) {
+            if (value == null) {
                 value = System.getenv(name);
                 LOG.keywordAppender().appendProperty("Replacement System Environment Value ['" + name + "']", value);
             }
@@ -138,7 +161,7 @@ public class ELUtils {
             startIndex = matcher.start() + strValue.length();
         }
 
-        if(!StringUtils.equals(string, buf.toString())) {
+        if (!StringUtils.equals(string, buf.toString())) {
             LOG.keywordAppender().appendProperty(String.format("Replacement ['%s']", string), buf.toString());
         }
 
@@ -148,11 +171,11 @@ public class ELUtils {
     public static Object eval(final String expression, Object... args) throws Exception {
         LOG.keywordAppender().appendProperty("(eval) Expression", expression);
 
-        if(args != null && args.length > 0) {
+        if (args != null && args.length > 0) {
             LOG.keywordAppender().appendProperty("(eval) Arguments", args);
         }
 
-        if(args == null || args.length == 0) {
+        if (args == null || args.length == 0) {
             return getHelper().evaluate(expression);
         }
 
@@ -165,7 +188,7 @@ public class ELUtils {
     }
 
     public static Object robotVar(String name) throws NoSuchFieldException, IllegalAccessException {
-        if(MainContextHolder.get() == null) {
+        if (MainContextHolder.get() == null) {
             throw new IllegalStateException("Not running on robot framework runtime.");
         }
 
@@ -175,13 +198,13 @@ public class ELUtils {
         interpreter.set("name", robotVarName);
         interpreter.exec(
                 "from robot.libraries.BuiltIn import BuiltIn\n" +
-                "result= BuiltIn().get_variable_value(name)\n"
+                        "result= BuiltIn().get_variable_value(name)\n"
         );
 
 
         Object result = interpreter.get("result");
 
-        if(result != null) {
+        if (result != null) {
             LOG.keywordAppender().appendProperty(String.format("robotVar('%s')", name), result.getClass());
         } else {
             LOG.keywordAppender().appendProperty(String.format("robotVar('%s')", name), null);
@@ -190,7 +213,7 @@ public class ELUtils {
 
         Object javaObject = PythonUtils.toJava(result);
 
-        if(javaObject != null) {
+        if (javaObject != null) {
             LOG.keywordAppender().appendProperty(String.format("robotVar('%s')", name), javaObject.getClass());
         }
 
@@ -208,13 +231,13 @@ public class ELUtils {
     }
 
     public static boolean in(String... strs) {
-        List<String> list = Arrays.asList(strs).subList(1,  strs.length);
+        List<String> list = Arrays.asList(strs).subList(1, strs.length);
 
         return list.contains(strs[0]);
     }
 
     public static Integer toInteger(Object integer) {
-        if(Number.class.isInstance(integer)) {
+        if (Number.class.isInstance(integer)) {
             return ((Number) integer).intValue();
         }
 
@@ -224,8 +247,8 @@ public class ELUtils {
     public static String regexCapture(String str, String regex, int... groups) {
         Matcher matcher = Pattern.compile(regex).matcher(str);
 
-        if(matcher.find()) {
-            if(groups.length > 0) {
+        if (matcher.find()) {
+            if (groups.length > 0) {
                 return matcher.group(groups[0]);
             } else {
                 return matcher.group(0);
@@ -240,7 +263,7 @@ public class ELUtils {
         String key;
         String compare;
 
-        if(args.length > 2) {
+        if (args.length > 2) {
             location = args[0];
             key = args[1];
             compare = args[2];
@@ -260,7 +283,7 @@ public class ELUtils {
     }
 
     private static Properties getInProperties(String location) throws IOException {
-        if(inCache.containsKey(location)) {
+        if (inCache.containsKey(location)) {
             return inCache.get(location);
         }
 
@@ -285,11 +308,11 @@ public class ELUtils {
         Queue<Object> arguments = new LinkedList<Object>();
         arguments.addAll(Arrays.asList(args));
 
-        while(!arguments.isEmpty()) {
-            if(arguments.size() > 1) {
+        while (!arguments.isEmpty()) {
+            if (arguments.size() > 1) {
                 boolean condition = (Boolean) arguments.remove();
                 Object value = arguments.remove();
-                if(condition) {
+                if (condition) {
                     return value;
                 }
             } else {
@@ -309,11 +332,11 @@ public class ELUtils {
 
         Object variable = arguments.remove();
 
-        while(!arguments.isEmpty()) {
-            if(arguments.size() > 1) {
+        while (!arguments.isEmpty()) {
+            if (arguments.size() > 1) {
                 Object variableValue = arguments.remove();
                 Object mapValue = arguments.remove();
-                if(variable.equals(variableValue)) {
+                if (variable.equals(variableValue)) {
                     return mapValue;
                 }
             } else {
@@ -326,9 +349,9 @@ public class ELUtils {
     }
 
     public static String substring(String str, Integer... index) {
-        if(index.length > 1) {
+        if (index.length > 1) {
             return StringUtils.substring(str, index[0], index[1]);
-        } else if(index.length == 1) {
+        } else if (index.length == 1) {
             return StringUtils.substring(str, index[0]);
         }
 
@@ -350,12 +373,12 @@ public class ELUtils {
     public static String convertUnicode(String str) {
         StringBuilder buf = new StringBuilder();
 
-        for(int i = 0; i < str.length(); i++) {
+        for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
-            if(ch == '\\') {
+            if (ch == '\\') {
                 String toConvert = str.substring(i, i + 6);
 
-                if(!str.startsWith("\\u")) {
+                if (!str.startsWith("\\u")) {
                     buf.append(ch);
                     continue;
                 }
