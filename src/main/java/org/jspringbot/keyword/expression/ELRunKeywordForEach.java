@@ -19,6 +19,7 @@
 package org.jspringbot.keyword.expression;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.jspringbot.KeywordInfo;
 import org.jspringbot.syntax.HighlightRobotLogger;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @KeywordInfo(
@@ -37,31 +39,43 @@ public class ELRunKeywordForEach extends AbstractExpressionKeyword {
     public static final HighlightRobotLogger LOG = HighlightRobotLogger.getLogger(ExpressionHelper.class);
 
     @Override
+    @SuppressWarnings("unchecked")
     public Object execute(final Object[] params) throws Exception {
-        if(!Collection.class.isInstance(params[2])) {
-            throw new IllegalArgumentException("Expecting list for first argument.");
+        if(!Collection.class.isInstance(params[2]) || Map.class.isInstance(params[2])) {
+            throw new IllegalArgumentException("Expecting list or map for first argument.");
         }
 
-        Collection items = (Collection) params[2];
+        if(Collection.class.isInstance(params[2])) {
+            Collection items = (Collection) params[2];
 
-        if(CollectionUtils.isEmpty(items)) {
-            return null;
-        }
-
-        List<Long> excludeIndices = ELUtils.getExcludeIndices();
-
-        Iterator itr = items.iterator();
-        for(Long i = 0l; i < items.size(); i++) {
-            Object item = itr.next();
-
-            if(excludeIndices.contains(i)) {
-                defaultVariableProvider.add("excludedIndex", i);
-                continue;
+            if (CollectionUtils.isEmpty(items)) {
+                return null;
             }
 
-            defaultVariableProvider.add("index", i);
-            defaultVariableProvider.add(String.valueOf(params[1]), item);
-            ELRunKeyword.runKeyword(String.valueOf(params[0]));
+            List<Long> excludeIndices = ELUtils.getExcludeIndices();
+
+            Iterator itr = items.iterator();
+            for (Long i = 0L; i < items.size(); i++) {
+                Object item = itr.next();
+
+                if (excludeIndices.contains(i)) {
+                    defaultVariableProvider.add("excludedIndex", i);
+                    continue;
+                }
+
+                defaultVariableProvider.add("index", i);
+                defaultVariableProvider.add(String.valueOf(params[1]), item);
+                ELRunKeyword.runKeyword(String.valueOf(params[0]));
+            }
+        } else {
+            Map items = (Map) params[2];
+            if (MapUtils.isEmpty(items)) {
+                return null;
+            }
+
+            for (Map.Entry item : (Iterable<Map.Entry>) items.entrySet()) {
+                defaultVariableProvider.add(String.valueOf(params[1]), item);
+            }
         }
 
         return null;
