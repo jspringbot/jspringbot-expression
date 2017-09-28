@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<functions>
+  <function>
+    <prefix>set</prefix>
+    <name>create</name>
+    <description>creates a set.</description>
+    <function-class>org.jspringbot.keyword.expression.utils.SetUtils</function-class>
+    <function-signature>java.util.Set create()</function-signature>
+  </function>
+  <function>
+    <prefix>set</prefix>
+    <name>add</name>
+    <description>add an element to set.</description>
+    <function-class>org.jspringbot.keyword.expression.utils.SetUtils</function-class>
+    <function-signature>boolean add(java.util.Set, java.lang.Object)</function-signature>
+  </function>
+</functions>

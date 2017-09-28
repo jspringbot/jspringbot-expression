@@ -33,6 +33,7 @@
       <list>
         <value>classpath:functions/array-functions.xml</value>
         <value>classpath:functions/collection-functions.xml</value>
+        <value>classpath:functions/set-functions.xml</value>
         <value>classpath:functions/escape-functions.xml</value>
         <value>classpath:functions/expression-functions.xml</value>
         <value>classpath:functions/id-functions.xml</value>
