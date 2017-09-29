@@ -1,13 +1,12 @@
 package org.jspringbot.keyword.expression.utils;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceEditor;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 import static org.jspringbot.keyword.expression.ELUtils.replaceVars;
 
@@ -57,6 +56,23 @@ public class ELFileUtils {
     private static void makeDirs(File dir) {
         if(!dir.isDirectory()) {
             dir.mkdirs();
+        }
+    }
+
+    public static void writeToFile(String fileString, String data) throws IOException {
+        BufferedWriter writer = null;
+
+        try {
+            File file = new File(fileString);
+            if(!file.getParentFile().isDirectory()) {
+                file.getParentFile().mkdirs();
+            }
+
+            writer = new BufferedWriter(new FileWriter(file));
+            writer.write(data);
+            writer.close();
+        } finally {
+            IOUtils.closeQuietly(writer);
         }
     }
 

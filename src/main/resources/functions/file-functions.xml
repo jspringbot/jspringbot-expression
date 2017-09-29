@@ -64,4 +64,11 @@
     <function-class>org.jspringbot.keyword.expression.utils.ELFileUtils</function-class>
     <function-signature>void copy(java.io.File,java.io.File)</function-signature>
   </function>
+  <function>
+    <prefix>file</prefix>
+    <name>writeToFile</name>
+    <description>Write To File</description>
+    <function-class>org.jspringbot.keyword.expression.utils.ELFileUtils</function-class>
+    <function-signature>void writeToFile(java.lang.String,java.lang.String)</function-signature>
+  </function>
 </functions>
