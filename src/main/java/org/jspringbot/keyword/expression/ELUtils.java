@@ -133,7 +133,7 @@ public class ELUtils {
     }
 
     public static double randomBetweenDouble(double min, double max) {
-        return min + (int) (Math.random() * ((max - min)));
+        return min + (double) (Math.random() * ((max - min)));
     }
 
     public static float randomBetweenFloat(float min, float max) {
