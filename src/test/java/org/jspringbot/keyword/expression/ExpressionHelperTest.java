@@ -244,6 +244,16 @@ public class ExpressionHelperTest {
 
     }
 
+    @Test
+    public void testRandomBeetweenFloat() throws Exception {
+        addVariable("randomFloat", evaluate("$[math:randomBetweenFloat(0.01,0.50)]"));
+    }
+
+    @Test
+    public void testRandomBeetweenDouble() throws Exception {
+        addVariable("randomDouble", evaluate("$[math:randomBetweenDouble(0.01,0.50)]"));
+    }
+
     @Before
     public void setUp() throws Throwable {
         PrivateAccessor.invoke(ApplicationContextHolder.class, "set", new Class[] {ApplicationContext.class}, new Object[] {context});

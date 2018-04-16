@@ -132,6 +132,16 @@ public class ELUtils {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
+    public static double randomBetweenDouble(double min, double max) {
+        return min + (int) (Math.random() * ((max - min)));
+    }
+
+    public static float randomBetweenFloat(float min, float max) {
+        Random rand = new Random();
+        float result = rand.nextFloat() * (max - min) + min;
+        return result;
+    }
+
     public static String replaceVars(String string) throws Exception {
         StringBuilder buf = new StringBuilder(string);
         Matcher matcher = PATTERN.matcher(buf);
