@@ -247,11 +247,15 @@ public class ExpressionHelperTest {
     @Test
     public void testRandomBeetweenFloat() throws Exception {
         addVariable("randomFloat", evaluate("$[math:randomBetweenFloat(0.01,0.50)]"));
+        evaluate("$[randomFloat < 0.50]");
+        System.out.println("randomFloat: " + evaluate("$[randomFloat]"));
     }
 
     @Test
     public void testRandomBeetweenDouble() throws Exception {
         addVariable("randomDouble", evaluate("$[math:randomBetweenDouble(0.01,0.50)]"));
+        evaluate("$[randomDouble < 1]");
+        System.out.println("randomDouble: " + evaluate("$[randomDouble]"));
     }
 
     @Before
