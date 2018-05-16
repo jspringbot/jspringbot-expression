@@ -258,6 +258,14 @@ public class ExpressionHelperTest {
         System.out.println("randomDouble: " + evaluate("$[randomDouble]"));
     }
 
+    @Test
+    public void testFormatDouble() throws Exception {
+        addVariable("formatDouble", "108.27000000000001");
+        evaluate("$[formatDouble(formatDouble,'##.00')]");
+        System.out.println("formaDouble: " + evaluate("$[formatDouble(formatDouble,'##.00')]"));
+        evaluateEquals(108.27,"$[formatDouble(formatDouble,'##.00')]");
+    }
+
     @Before
     public void setUp() throws Throwable {
         PrivateAccessor.invoke(ApplicationContextHolder.class, "set", new Class[] {ApplicationContext.class}, new Object[] {context});
