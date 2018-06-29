@@ -25,12 +25,13 @@
   <parent>
     <groupId>org.jspringbot</groupId>
     <artifactId>jspringbot-libraries</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.9</version>
   </parent>
 
   <artifactId>jspringbot-expression</artifactId>
-  <version>1.6-SNAPSHOT</version>
+  <version>1.9-SNAPSHOT</version>
   <name>jspringbot-expression</name>
+  <description>JSpringBot Expression Library</description>
 
   <licenses>
     <license>
@@ -41,21 +42,11 @@
     </license>
   </licenses>
 
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <scm>
     <connection>scm:git:https://github.com/jspringbot/jspringbot-expression.git</connection>
     <url>scm:git:https://github.com/jspringbot/jspringbot-expression.git</url>
     <developerConnection>scm:git:https://github.com/jspringbot/jspringbot-expression.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
 
   <developers>
@@ -104,6 +95,7 @@
     <dependency>
       <groupId>org.jspringbot</groupId>
       <artifactId>jspringbot-pretty-logger</artifactId>
+      <version>${jspringbot.version}</version>
     </dependency>
     <dependency>
       <groupId>de.odysseus.juel</groupId>
