@@ -20,18 +20,24 @@ package org.jspringbot.keyword.expression;
 
 import org.jspringbot.Keyword;
 import org.jspringbot.keyword.expression.plugin.DefaultVariableProviderImpl;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 import javax.annotation.Resource;
 
-public abstract class AbstractExpressionKeyword implements Keyword {
+public abstract class AbstractExpressionKeyword implements Keyword, InitializingBean {
 
     @Autowired
     protected ExpressionHelper helper;
-
-    @Resource
+    @Autowired
+    protected ApplicationContext applicationContext;
     protected DefaultVariableProviderImpl defaultVariableProvider;
-
-    @Resource
     protected DefaultVariableProviderImpl globalVariableProvider;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        defaultVariableProvider = applicationContext.getBean("defaultVariableProvider", DefaultVariableProviderImpl.class);
+        globalVariableProvider = applicationContext.getBean("globalVariableProvider", DefaultVariableProviderImpl.class);
+    }
 }
