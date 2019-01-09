@@ -29,7 +29,8 @@ import org.jspringbot.syntax.HighlightRobotLogger;
 import org.python.util.PythonInterpreter;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceEditor;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -88,17 +89,20 @@ public class ELUtils {
     }
 
     public static String encodeToString(BufferedImage image, String type) throws IOException {
-        String imageString = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        String encodedValue;
+        ByteArrayOutputStream bos = null;
 
-        ImageIO.write(image, type, bos);
-        byte[] imageBytes = bos.toByteArray();
+        try {
+            bos = new ByteArrayOutputStream();
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+            Base64 base64 = new Base64();
+            encodedValue = new String(base64.encode(imageBytes));
+        } finally {
+            IOUtils.closeQuietly(bos);
+        }
 
-        BASE64Encoder encoder = new BASE64Encoder();
-        imageString = encoder.encode(imageBytes);
-
-        bos.close();
-        return imageString;
+        return encodedValue;
     }
 
     private static ExpressionHelper getHelper() {
