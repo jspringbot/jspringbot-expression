@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.jspringbot.spring.ApplicationContextHolder;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -264,6 +265,19 @@ public class ExpressionHelperTest {
         evaluate("$[formatDouble(formatDouble,'##.00')]");
         System.out.println("formaDouble: " + evaluate("$[formatDouble(formatDouble,'##.00')]"));
         evaluateEquals(108.27,"$[formatDouble(formatDouble,'##.00')]");
+    }
+
+    @Test
+    @Ignore
+    public void testBase64Image() throws Exception {
+        // Works for file and classpath
+        // Sample A:
+        // ${imgFile}=       Element Capture Screenshot      $[config:captcha.image.locator]
+        // evaluate("$[base64Image('file:${imgFile}','png')]");
+        // Sample B: captcha.png in images folder
+        // evaluate("$[base64Image('classpath:images/captcha.png','png')]");
+        evaluate("$[base64Image('/Users/shielabuitizon/Downloads/Captcha.png','png')]");
+        System.out.println("base64Image: " + evaluate("$[basei64Image('/Users/shielabuitizon/Downloads/Captcha.png','png')]"));
     }
 
     @Before
