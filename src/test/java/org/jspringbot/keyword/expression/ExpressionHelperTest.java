@@ -273,11 +273,20 @@ public class ExpressionHelperTest {
         // Works for file and classpath
         // Sample A:
         // ${imgFile}=       Element Capture Screenshot      $[config:captcha.image.locator]
+        // EL Add Variable   base64String                        $[base64Image('file:${imgFile}','png')]
         // evaluate("$[base64Image('file:${imgFile}','png')]");
+
         // Sample B: captcha.png in images folder
         // evaluate("$[base64Image('classpath:images/captcha.png','png')]");
-        evaluate("$[base64Image('/Users/shielabuitizon/Downloads/Captcha.png','png')]");
-        System.out.println("base64Image: " + evaluate("$[basei64Image('/Users/shielabuitizon/Downloads/Captcha.png','png')]"));
+        //evaluate("$[base64Image('/Users/shielabuitizon/Downloads/Captcha.png','png')]");
+        //System.out.println("base64Image: " + evaluate("$[basei64Image('/Users/shielabuitizon/Downloads/Captcha.png','png')]"));
+
+        evaluate("$[base64Image('classpath:images/captcha.jpg', 'jpeg')]");
+        System.out.println("base64Image: " + evaluate("$[base64Image('classpath:images/captcha.jpg', 'jpeg')]"));
+        //evaluate("$[base64Image('file::C:\\workspace\\qat-w88-web\\target\\robotframework-reports\\screen_capture_1566531624359_1.png', 'png')]");
+        //System.out.println("result: " + ELUtils.base64Image("file:C:\\workspace\\qat-w88-web\\target\\robotframework-reports\\screen_capture_1566531624359_1.png", "png"));
+        //evaluate("$[base64Image('file::C:/workspace/qat-w88-web/target/robotframework-reports/screen_capture_1566531624359_1.png', 'png')]");
+        //System.out.println("result: " + ELUtils.base64Image("file:C:/workspace/qat-w88-web/target/robotframework-reports/screen_capture_1566531624359_1.png", "png"));
     }
 
     @Before

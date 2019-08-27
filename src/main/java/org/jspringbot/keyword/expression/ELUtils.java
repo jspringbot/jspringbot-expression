@@ -80,7 +80,7 @@ public class ELUtils {
 
     public static String base64Image(String resourceAsText, String type) throws IOException {
         ResourceEditor editor = new ResourceEditor();
-        editor.setAsText(resourceAsText);
+        editor.setAsText(StringUtils.replaceChars(resourceAsText, '\\', '/'));
 
         Resource resource = (Resource) editor.getValue();
         BufferedImage img = ImageIO.read(resource.getFile());
