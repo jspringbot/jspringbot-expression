@@ -268,7 +268,7 @@ public class ExpressionHelperTest {
     }
 
     @Test
-    //@Ignore
+    @Ignore
     public void testBase64Image() throws Exception {
         // Works for file and classpath
         // Sample A:
