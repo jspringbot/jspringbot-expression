@@ -88,6 +88,12 @@ public class ELUtils {
         return encodeToString(img, type);
     }
 
+    public static String base64ImageFile(File file, String type) throws IOException {
+        BufferedImage img = ImageIO.read(file);
+
+        return encodeToString(img, type);
+    }
+
     public static String encodeToString(BufferedImage image, String type) throws IOException {
         String encodedValue;
         ByteArrayOutputStream bos = null;

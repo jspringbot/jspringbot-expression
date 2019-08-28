@@ -20,6 +20,12 @@
     <function-signature>java.lang.String base64Image(java.lang.String,java.lang.String)</function-signature>
   </function>
   <function>
+    <name>base64ImageFile</name>
+    <description>converts image file to base64</description>
+    <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>
+    <function-signature>java.lang.String base64ImageFile(java.io.File,java.lang.String)</function-signature>
+  </function>
+  <function>
     <name>convertUnicode</name>
     <description>Converts string to unicode character.</description>
     <function-class>org.jspringbot.keyword.expression.ELUtils</function-class>
